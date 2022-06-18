@@ -1,8 +1,8 @@
 import sys
 
 
-def make_graph(array: list[int]) -> dict[int, list[int]]:
-    graph: dict[int, list[int]] = {}
+def make_graph(array):
+    graph = {}
     for i, a in enumerate(array):
         if i == 0:
             graph[i + 1] = [2, a]
@@ -14,7 +14,7 @@ def make_graph(array: list[int]) -> dict[int, list[int]]:
 
 
 ## corrected version
-def corrected_main_function(array: list[int]) -> dict[int, int]:
+def corrected_main_function(array):
     graph = make_graph(array)  # create graph tree
     # print(graph)
     depth = {i + 1: int(1e8) for i in range(len(graph))}
