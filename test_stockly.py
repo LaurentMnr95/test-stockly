@@ -8,38 +8,30 @@ def unique(a: int, b: int) -> list[int]:
 def make_graph(array: list[int]) -> dict[int, list[int]]:
     graph: dict[int, list[int]] = {}
     for i, a in enumerate(array):
-        if i == len(array) - 1:
-            graph[i + 1] = []
-        elif i + 1 == a:
-            graph[i + 1] = [i + 2]
+        if i == 0:
+            graph[i + 1] = [2, a]
+        elif i == len(array) - 1:
+            graph[i + 1] = [i]
         else:
-            graph[i + 1] = unique(i + 2, a)
+            graph[i + 1] = [i, a, i + 2]
     return graph
 
 
-def shortcuts(array: list[int]) -> dict[int, int]:
-    graph = make_graph(array)
+## corrected version
+def corrected_main_function(array: list[int]) -> dict[int, int]:
+    graph = make_graph(array)  # create graph tree
     print(graph)
-    visited: set[int] = set()  # Set to keep track of visited nodes of graph.
-    depth = {i + 1: 0 for i in range(len(array))}  # dict to store depth
-    known_depth: set[int] = set()
-    known_depth.add(1)
-
-    def dfs(
-        known_depth: set[int], visited: set[int], graph: dict[int, list[int]], node: int
-    ):  # function for dfs
-        if node not in visited:
-            visited.add(node)
-            for neighbour in graph[node]:
-                if neighbour not in known_depth:
-                    depth[neighbour] = depth[node] + 1
-                    known_depth.add(neighbour)
-            for neighbour in graph[node]:
-                dfs(known_depth, visited, graph, neighbour)
-
-    dfs(known_depth, visited, graph, 1)
+    depth = {}
+    next_to_visit = [1]
+    depth[1] = 0
+    while next_to_visit:
+        node = next_to_visit.pop(0)
+        for child in graph[node]:
+            if child not in depth.keys():
+                next_to_visit.append(child)
+                depth[child] = depth[node] + 1
     return depth
 
 
-array = [4, 4, 4, 4, 7, 7, 7]
-shortcuts(array)
+array = [7, 4, 4, 4, 7, 7, 7]
+corrected_main_function(array)
