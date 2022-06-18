@@ -1,1 +1,1 @@
-# startup_project# test-stockly
+# test-stockly
